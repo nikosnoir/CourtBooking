@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UiTM Court Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>UiTM Court Booking</h1>
+        <button id="loginBtn">Login with Google</button>
+    </nav>
+
+    <section class="courts">
+        <div class="court-card" onclick="window.location.href='booking.html?court=takraw'">
+            <img src="court-icons/takraw.svg" alt="Takraw Court">
+            <h3>Takraw Court</h3>
+        </div>
+        <div class="court-card" onclick="window.location.href='booking.html?court=futsal'">
+            <img src="court-icons/futsal.svg" alt="Futsal Court">
+            <h3>Futsal Court</h3>
+        </div>
+        <div class="court-card" onclick="window.location.href='booking.html?court=volleyball'">
+            <img src="court-icons/volleyball.svg" alt="Volleyball Court">
+            <h3>Volleyball Court</h3>
+        </div>
+    </section>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="app.js"></script>
+</body>
+</html>

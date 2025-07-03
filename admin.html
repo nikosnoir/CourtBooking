@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Admin Panel</h1>
+    </nav>
+
+    <section class="admin-section">
+        <h2>Set Court Availability</h2>
+
+        <select id="courtSelect">
+            <option value="takraw">Takraw</option>
+            <option value="futsal">Futsal</option>
+            <option value="volleyball">Volleyball</option>
+        </select>
+
+        <select id="statusSelect">
+            <option value="open">Open</option>
+            <option value="maintenance">Closed for Maintenance</option>
+        </select>
+
+        <button id="updateStatus">Update Status</button>
+
+        <h2>All Bookings</h2>
+        <table>
+            <thead>
+                <tr><th>Court</th><th>Date</th><th>Time</th><th>User</th></tr>
+            </thead>
+            <tbody id="bookingList"></tbody>
+        </table>
+    </section>
+
+    <script src="admin.js"></script>
+</body>
+</html>

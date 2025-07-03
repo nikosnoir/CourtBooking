@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <form id="loginForm">
+            <h2>Login</h2>
+            <input type="text" id="loginId" placeholder="User ID" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+        </form>
+        <form id="signUpForm" style="display:none;">
+            <h2>Sign Up</h2>
+            <input type="text" id="signUpId" placeholder="User ID" required>
+            <input type="password" id="signUpPassword" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+            <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+        </form>
+    </div>
+    <script>
+        // Toggle forms
+        document.getElementById('showSignUp').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signUpForm').style.display = 'block';
+        };
+        document.getElementById('showLogin').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('signUpForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        };
+
+        // Handle sign up
+        document.getElementById('signUpForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const id = document.getElementById('signUpId').value;
+            const password = document.getElementById('signUpPassword').value;
+            const res = await fetch('http://localhost:3000/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, password })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if (res.ok) {
+                document.getElementById('signUpForm').reset();
+                document.getElementById('showLogin').click();
+            }
+        };
+
+        // Handle login
+        document.getElementById('loginForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const id = document.getElementById('loginId').value;
+            const password = document.getElementById('loginPassword').value;
+            const res = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, password })
+            });
+            const data = await res.json();
+            alert(data.message);
+            if (res.ok) {
+                // Redirect or show user dashboard
+                window.location.href = 'booking.html';
+            }
+        };
+    </script>
+</body>
+</html>
