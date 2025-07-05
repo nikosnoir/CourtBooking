@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Court Booking</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Court Booking</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <nav class="navbar">
-        <h1 id="courtName">Booking</h1>
-    </nav>
 
-    <section class="booking-section">
-        <h2>Select Date</h2>
-        <input type="date" id="datePicker">
+  <nav class="navbar">
+    <h1 id="courtName">Court Booking</h1>
+  </nav>
 
-        <h2>Time Slots</h2>
-        <div class="time-grid" id="timeGrid"></div>
+  <section class="booking-section">
+    <h2>Select Date</h2>
+    <!-- ✅ ADD class="date-input" -->
+    <input type="date" id="datePicker" class="date-input" />
 
-        <button id="confirmBooking">Confirm Booking</button>
-    </section>
+    <h2>Available Time Slots</h2>
+    <div class="time-grid" id="timeGrid"></div>
 
-    <script src="booking.js"></script>
+    <!-- ✅ ADD class="submit-btn" -->
+    <button id="confirmBooking" class="submit-btn">Confirm Booking</button>
+  </section>
+
+  <script src="booking.js"></script>
 </body>
 </html>

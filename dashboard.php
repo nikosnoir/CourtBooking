@@ -1,13 +1,9 @@
 <?php
 session_start();
-
-// Redirect to login if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
-
-// Get user data from session
 $userName = $_SESSION['user_name'];
 $userRole = $_SESSION['role'];
 ?>
@@ -17,10 +13,24 @@ $userRole = $_SESSION['role'];
 <head>
     <title>Dashboard - UiTM Court Booking</title>
     <style>
-        body { font-family: Arial; padding: 40px; background: #f3f6fa; }
-        .container { max-width: 800px; margin: auto; text-align: center; }
-        h1 { color: #333; }
-        .info { font-size: 18px; margin: 20px 0; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f3f6fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 60px auto 0;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .info {
+            font-size: 18px;
+            margin: 20px 0;
+        }
         .buttons a {
             display: inline-block;
             margin: 10px;
@@ -37,9 +47,11 @@ $userRole = $_SESSION['role'];
 </head>
 <body>
 
+<?php include 'navbar.php'; ?>
+
 <div class="container">
-    <h1>Welcome, <?php echo htmlspecialchars($userName); ?>!</h1>
-    <p class="info">You are logged in as a <strong><?php echo htmlspecialchars($userRole); ?></strong>.</p>
+    <h1>Welcome, <?= htmlspecialchars($userName); ?>!</h1>
+    <p class="info">You are logged in as a <strong><?= htmlspecialchars($userRole); ?></strong>.</p>
 
     <div class="buttons">
         <a href="index.html">📅 Book a Court</a>
