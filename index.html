@@ -6,12 +6,31 @@
     <title>UiTM Court Booking</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
+
     <nav class="navbar">
-        <h1>UiTM Court Booking</h1>
-        <button id="loginBtn">Login with Google</button>
-    </nav>
+  <h1>UiTM Court Booking</h1>
+  <div class="nav-buttons">
+    <a href="login.php" class="nav-btn">Login with Email</a>
+    <div class="google-container">
+      <div id="g_id_onload"
+           data-client_id="44670180521-t081jd2g4kbst7cd2ac71di4flo1c4md.apps.googleusercontent.com"
+           data-callback="handleGoogleLogin"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-size="medium"
+           data-theme="outline"
+           data-text="sign_in_with"
+           data-shape="pill"
+           data-logo_alignment="left">
+      </div>
+    </div>
+  </div>
+</nav>
 
     <section class="courts">
         <div class="court-card" onclick="window.location.href='booking.html?court=takraw'">
@@ -28,7 +47,23 @@
         </div>
     </section>
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="app.js"></script>
+    <script>
+        function handleGoogleLogin(response) {
+            fetch('google_login.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: response.credential })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    window.location.href = 'dashboard.php';
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>

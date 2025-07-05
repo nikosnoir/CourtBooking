@@ -1,4 +1,9 @@
 const court = new URLSearchParams(window.location.search).get('court');
+if (!court) {
+    alert("❌ Court not specified in URL. Please select a court from the homepage.");
+    window.location.href = "index.html";
+    throw new Error("Court parameter missing");
+}
 document.getElementById('courtName').innerText = `${court.charAt(0).toUpperCase() + court.slice(1)} Court Booking`;
 
 const timeGrid = document.getElementById('timeGrid');
@@ -31,8 +36,31 @@ confirmBtn.onclick = () => {
         alert("Please select date and time slot");
         return;
     }
-    alert(`Booking confirmed for ${court} on ${date} at ${selectedSlot}:00`);
-    // Here, you'd send to backend (API) to save booking
+
+    const data = {
+        court,
+        date,
+        time: `${selectedSlot}:00:00`
+    };
+
+    fetch('save_booking.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(response => {
+        if (response.status === 'success') {
+            alert("✅ " + response.message);
+            window.location.href = 'my_bookings.php';
+        } else {
+            alert("❌ " + response.message);
+        }
+    })
+    .catch(() => {
+        alert("❌ Something went wrong. Please try again.");
+    });
 };
+
 
 createTimeSlots();
