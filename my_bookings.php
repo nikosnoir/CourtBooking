@@ -41,7 +41,7 @@ $bookings = $stmt->fetchAll();
     </style>
 </head>
 <body>
-
+<?php include 'navbar.php'; ?>
 <div class="container">
     <h2><?php echo htmlspecialchars($userName); ?>'s Bookings</h2>
 

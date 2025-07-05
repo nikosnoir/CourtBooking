@@ -1,101 +1,142 @@
 <?php
 session_start();
-if (isset($_SESSION['user_id'])) {
-    header("Location: dashboard.php");
-    exit;
-}
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login - UiTM Court Booking</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - UiTM Court Booking</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <!-- Internal CSS Styling -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
 
-        .login-container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
+    .navbar {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
 
-        .login-container h2 {
-            color: #004080;
-            margin-bottom: 1.5rem;
-        }
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
 
-        .login-container input[type="email"],
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+    .login-container h2 {
+      color: #004080;
+      margin-bottom: 1.5rem;
+    }
 
-        .login-container button {
-            width: 100%;
-            padding: 12px;
-            background-color: #004080;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    .login-input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
 
-        .login-container button:hover {
-            background-color: #003366;
-        }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #004080;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        .login-container .back-link {
-            display: block;
-            margin-top: 1rem;
-            color: #004080;
-            text-decoration: none;
-        }
+    .login-btn:hover {
+      background-color: #003366;
+    }
 
-        .login-container .back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .back-link {
+      display: block;
+      margin-top: 1.5rem;
+      color: #004080;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .google-container {
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Login with Email</h2>
-        <form method="POST" action="login_process.php">
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
-        <a class="back-link" href="index.html">← Back to Home</a>
-        <?php if (isset($_SESSION['error'])): ?>
-    <p style="color: red; margin-bottom: 1rem;">
-        <?= htmlspecialchars($_SESSION['error']) ?>
-    </p>
-    <?php unset($_SESSION['error']); ?>
-<?php endif; ?>
+  <nav class="navbar">
+    <h1>UiTM Court Booking</h1>
+  </nav>
 
+  <div class="login-container">
+    <h2>Login with Email</h2>
+
+    <form action="login_process.php" method="POST">
+      <input type="email" name="email" placeholder="Email" class="login-input" required>
+      <input type="password" name="password" placeholder="Password" class="login-input" required>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <a class="back-link" href="index.php">← Back to Home</a>
+
+    <div class="google-container">
+      <div id="g_id_onload"
+           data-client_id="44670180521-t081jd2g4kbst7cd2ac71di4flo1c4md.apps.googleusercontent.com"
+           data-callback="handleGoogleLogin"
+           data-auto_prompt="false">
+      </div>
+
+      <div class="g_id_signin"
+           data-type="standard"
+           data-size="medium"
+           data-theme="outline"
+           data-text="sign_in_with"
+           data-shape="pill"
+           data-logo_alignment="left">
+      </div>
     </div>
+  </div>
+
+  <script>
+    function handleGoogleLogin(response) {
+      fetch('google_login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: response.credential })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          window.location.href = 'dashboard.php';
+        } else {
+          alert(data.message || 'Google login failed');
+        }
+      });
+    }
+  </script>
 
 </body>
 </html>

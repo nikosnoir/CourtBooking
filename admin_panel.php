@@ -51,7 +51,7 @@ $bookings = $stmt->fetchAll();
     </style>
 </head>
 <body>
-
+<?php include 'navbar.php'; ?>
 <div class="container">
     <h2>Admin Panel: Manage Bookings</h2>
 

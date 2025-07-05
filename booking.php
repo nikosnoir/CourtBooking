@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +17,11 @@
 
   <section class="booking-section">
     <h2>Select Date</h2>
-    <!-- ✅ ADD class="date-input" -->
     <input type="date" id="datePicker" class="date-input" />
 
     <h2>Available Time Slots</h2>
     <div class="time-grid" id="timeGrid"></div>
 
-    <!-- ✅ ADD class="submit-btn" -->
     <button id="confirmBooking" class="submit-btn">Confirm Booking</button>
   </section>
 
