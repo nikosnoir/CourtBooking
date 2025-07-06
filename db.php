@@ -7,11 +7,15 @@ $password = $_ENV['DATABASE_URL'] ? parse_url($_ENV['DATABASE_URL'], PHP_URL_PAS
 $port = $_ENV['DATABASE_URL'] ? parse_url($_ENV['DATABASE_URL'], PHP_URL_PORT) : ($_ENV['DB_PORT'] ?? '3306');
 
 try {
-    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
-    $pdo = new PDO($dsn, $username, $password);
-    // Enable exceptions
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    // Add SSL support for PostgreSQL connection
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require";
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_TIMEOUT => 10, // 10 second timeout
+    ];
+    
+    $pdo = new PDO($dsn, $username, $password, $options);
 } catch (PDOException $e) {
     die("DB Connection Failed: " . $e->getMessage());
 }
