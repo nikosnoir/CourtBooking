@@ -2,8 +2,20 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 const app = express();
-const db = new sqlite3.Database('./users.db');
+
+// Use environment port or default to 3000
+const PORT = process.env.NODE_PORT || 3000;
+
+// Create data directory if it doesn't exist
+const dataDir = './data';
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+}
+
+const db = new sqlite3.Database(path.join(dataDir, 'users.db'));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,4 +44,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Node.js server running on port ${PORT}`);
+});
