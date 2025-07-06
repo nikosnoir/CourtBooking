@@ -7,7 +7,7 @@ $password = $_ENV['DATABASE_URL'] ? parse_url($_ENV['DATABASE_URL'], PHP_URL_PAS
 $port = $_ENV['DATABASE_URL'] ? parse_url($_ENV['DATABASE_URL'], PHP_URL_PORT) : ($_ENV['DB_PORT'] ?? '3306');
 
 try {
-    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
     $pdo = new PDO($dsn, $username, $password);
     // Enable exceptions
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
