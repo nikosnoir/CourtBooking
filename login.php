@@ -100,6 +100,11 @@ session_start();
       <button type="submit" class="login-btn">Login</button>
     </form>
 
+    <a href="register.php" style="display:block; margin-top: 1rem; background-color:#ccc; padding: 12px; border-radius: 6px; text-decoration: none; color: #004080; font-weight: bold;">
+      Don’t have an account? Register here
+    </a>
+
+
     <a class="back-link" href="index.php">← Back to Home</a>
 
     <div class="google-container">

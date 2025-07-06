@@ -31,7 +31,7 @@ $userRole = $_SESSION['role'] ?? '';
 <div class="navbar">
     <div class="nav-left">UiTM Court Booking</div>
     <div class="nav-right">
-        <a href="index.html">Home</a>
+        <a href="dashboard.php">Home</a>
         <a href="my_bookings.php">My Bookings</a>
         <?php if ($userRole === 'admin'): ?>
             <a href="admin_panel.php">Admin Panel</a>

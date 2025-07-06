@@ -35,23 +35,136 @@ $bookings = $stmt->fetchAll();
 <head>
     <title>Admin Panel - UiTM Court Booking</title>
     <style>
-        body { font-family: Arial; background: #f7faff; padding: 40px; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
-        h2 { text-align: center; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
-        th { background-color: #003366; color: white; }
-        .actions form { display: inline; margin: 0; }
-        .approve { background-color: green; color: white; border: none; padding: 5px 10px; }
-        .reject { background-color: red; color: white; border: none; padding: 5px 10px; }
-        .status-approved { color: green; font-weight: bold; }
-        .status-rejected { color: red; font-weight: bold; }
-        .status-pending { color: orange; font-weight: bold; }
-        .back { display: block; text-align: center; margin-top: 20px; color: #005ea2; text-decoration: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #004080;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #004080;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 14px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+        }
+
+        .actions form {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .approve, .reject {
+            padding: 6px 12px;
+            font-size: 13px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .approve {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .reject {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .approve:hover {
+            background-color: #218838;
+        }
+
+        .reject:hover {
+            background-color: #c82333;
+        }
+
+        .status-approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-rejected {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #004080;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+
+            .approve, .reject {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
+
 <?php include 'navbar.php'; ?>
+
 <div class="container">
     <h2>Admin Panel: Manage Bookings</h2>
 
@@ -70,10 +183,10 @@ $bookings = $stmt->fetchAll();
             <?php foreach ($bookings as $b): ?>
                 <tr>
                     <td><?= htmlspecialchars($b['user_name']) ?></td>
-                    <td><?= htmlspecialchars($b['role']) ?></td>
+                    <td><?= ucfirst($b['role']) ?></td>
                     <td><?= htmlspecialchars($b['court_name']) ?></td>
                     <td><?= ucfirst($b['type']) ?></td>
-                    <td><?= $b['booking_date'] ?></td>
+                    <td><?= htmlspecialchars($b['booking_date']) ?></td>
                     <td><?= substr($b['booking_time'], 0, 5) ?></td>
                     <td class="status-<?= $b['status'] ?>"><?= ucfirst($b['status']) ?></td>
                     <td class="actions">

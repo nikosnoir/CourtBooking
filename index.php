@@ -1,55 +1,90 @@
-<?php
-session_start();
-?>
+<?php include 'navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>UiTM Court Booking</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="manifest" href="manifest.json"/>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      background: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_64tjkpnPf7uRc4Xx0w4LrH3Vv5O562Ctg2ueDI44xzidkM2KVUCL5Vq-l7VCjlFA0kJWp6gIJrpCVgf4teLq8HUgeON_8E8PLqd63-HtENlfIo0hjTSqOXvBTARwKMszAktgFhyphenhyphenb5OaH/s1600/Photo1142.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 90vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #f1f1f1;
+    }
+
+    .cta-btn {
+      background-color: #0073e6;
+      padding: 12px 25px;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      background-color: #005bb5;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-<?php include 'navbar.php'; ?>
-  <div class="nav-buttons">
-  <a href="login.php" class="nav-btn">Login</a>
-</div>
+  <div class="overlay"></div>
 
-
-  <section class="courts">
-    <div class="court-card" onclick="window.location.href='booking.html?court=takraw'">
-      <img src="https://i0.wp.com/www.ukuransaiz.com/wp-content/uploads/2025/02/Ukuran-Gelanggang-Sepak-Takraw-Rasmi-Sekolah-Rekreasi.webp" alt="Takraw Court">
-      <h3>Takraw Court</h3>
+  <div class="content-wrapper">
+    <div class="hero">
+      <img src="https://brandlogos.net/wp-content/uploads/2013/06/uitm-vector-logo.png" alt="UiTM Logo">
+      <h1>Welcome to UiTM Court Booking</h1>
+      <p>Book your favorite courts for takraw, futsal, or volleyball with just a few clicks. Fast, simple, and made for UiTM students and staff.</p>
+      <a href="login.php" class="cta-btn">Get Started</a>
     </div>
-    <div class="court-card" onclick="window.location.href='booking.html?court=futsal'">
-      <img src="https://cdn1.npcdn.net/userfiles/21669/image/01(3).jpg" alt="Futsal Court">
-      <h3>Futsal Court</h3>
-    </div>
-    <div class="court-card" onclick="window.location.href='booking.html?court=volleyball'">
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoLjDRcc34BbV77mJhUJwGS0gw84aX_GLEnqmejyqsAZOGXChyphenhyphenlP5b7qX3LhyGgfVH8BsVIzmsq384Jr6FrdqE62B1hjUasHcmj3vbnbRW7mpdnYIZ676YR3_ULMcME0QfI9kvbStnmdI/s1600/Photo0015.jpg" alt="Volleyball Court">
-      <h3>Volleyball Court</h3>
-    </div>
-  </section>
-
-  <script>
-    function handleGoogleLogin(response) {
-      fetch('google_login.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: response.credential })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === 'success') {
-          window.location.href = 'dashboard.php';
-        } else {
-          alert(data.message || 'Login failed');
-        }
-      });
-    }
-  </script>
-
+  </div>
 </body>
 </html>

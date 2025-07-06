@@ -2,7 +2,6 @@
 session_start();
 require 'db.php';
 
-// Check login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -11,7 +10,6 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 $userName = $_SESSION['user_name'];
 
-// Get user's bookings
 $stmt = $pdo->prepare("
     SELECT b.booking_date, b.booking_time, b.status, c.name AS court_name, c.type 
     FROM bookings b
@@ -27,26 +25,89 @@ $bookings = $stmt->fetchAll();
 <html>
 <head>
     <title>My Bookings - UiTM Court Booking</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body { font-family: Arial; background: #f0f4f9; padding: 40px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
-        h2 { text-align: center; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; border: 1px solid #ccc; text-align: center; }
-        th { background-color: #005ea2; color: white; }
-        .status-pending { color: orange; }
-        .status-approved { color: green; }
-        .status-rejected { color: red; }
-        a.back { display: block; margin-top: 20px; text-align: center; text-decoration: none; color: #005ea2; }
+        .booking-container {
+            max-width: 1000px;
+            margin: 80px auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .booking-container h2 {
+            text-align: center;
+            color: #004080;
+            margin-bottom: 30px;
+        }
+
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bookings-table th {
+            background-color: #004080;
+            color: white;
+            padding: 14px;
+            font-size: 16px;
+        }
+
+        .bookings-table td {
+            padding: 12px;
+            text-align: center;
+            font-size: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .status-approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-rejected {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .no-booking {
+            text-align: center;
+            color: #666;
+            font-size: 17px;
+            padding: 30px 0;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #004080;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+
 <?php include 'navbar.php'; ?>
-<div class="container">
-    <h2><?php echo htmlspecialchars($userName); ?>'s Bookings</h2>
+
+<div class="booking-container">
+    <h2><?php echo htmlspecialchars($userName); ?>'s Court Bookings</h2>
 
     <?php if (count($bookings) > 0): ?>
-        <table>
+        <table class="bookings-table">
             <tr>
                 <th>Court</th>
                 <th>Type</th>
@@ -65,10 +126,10 @@ $bookings = $stmt->fetchAll();
             <?php endforeach; ?>
         </table>
     <?php else: ?>
-        <p style="text-align:center;">You have no bookings yet.</p>
+        <p class="no-booking">You have no bookings yet.</p>
     <?php endif; ?>
 
-    <a class="back" href="dashboard.php">← Back to Dashboard</a>
+    <a href="dashboard.php" class="back-link">← Back to Dashboard</a>
 </div>
 
 </body>
