@@ -36,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         body {
             font-family: Arial, sans-serif;
+            background: url('https://img.freepik.com/premium-photo/8bit-pixel-art-football-stadium-background-2d-runner-background-ar-169-style-raw-job-id-7ad54a58ca1d49da8d1056efa5eb985d_939033-95168.jpg') no-repeat center center fixed;
+            background-size: cover;
             background-color: #f4f6f8;
             color: #333;
         }
